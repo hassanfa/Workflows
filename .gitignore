@@ -1,5 +1,5 @@
-Snakemake_workflows/data/**/*test*
-Snakemake_workflows/data/**/*.npz
-Snakemake_workflows/snakemake_workflow/.snakemake/
-Snakemake_workflows/snakemake_workflow/.DS_Store
-Snakemake_workflows/data/rasta
+snakemake_wisecondor/data/**/*test*
+snakemake_wisecondor/data/**/*.npz
+snakemake_wisecondor/snakemake_workflow/.snakemake/
+snakemake_wisecondor/snakemake_workflow/.DS_Store
+snakemake_wisecondor/data/rasta
