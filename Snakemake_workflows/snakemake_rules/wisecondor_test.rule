@@ -1,0 +1,46 @@
+# vim: syntax=python tabstop=4 expandtab
+# coding: utf-8
+
+__author__ = "Hassan Foroughi Asl"
+
+# Following rule will run wisecondor 
+rule wisecondor_convert:
+  input:
+    bam=lambda wildcards: config["path"]["bamout"] + config["sampleID"][wildcards.sample] + ".sorted.bam",
+  output:
+    npz=config["path"]["wcout"] + "{sample}.npz"
+  log: config["path"]["wcout"] + "{sample}.npz.log"
+  params:
+    arg=config["params"]["wc_convert"]
+  run:
+    shell("python2.7 ~/repos/wisecondor/wisecondor.py convert {input.bam} {output.npz} {params.arg} 2> {log}")
+
+# Following rule will run the test
+# python wisecondor.py test ./testSamples/sample.npz ./testSamples/sample_out.npz ./dataFiles/reference.npz
+rule wisecondor_test:
+  input:
+    npz=lambda wildcards: config["path"]["wcout"] + config["sampleID"][wildcards.sample] + ".npz",
+    refnpz=config["path"]["wcnpzref"] + config["references"]["wcref"]
+  output:
+    npz=config["path"]["wcout"] + "{sample}_out.npz"
+  log: config["path"]["wcout"] + "{sample}.npz.log"
+  params:
+    arg=""
+  run:
+    shell("python2.7 ~/repos/wisecondor/wisecondor.py test {input.npz} {output.npz} {input.refnpz} 2> {log}")
+
+# Following rule will plot and report the results
+# python wisecondor.py plot ./testSamples/sample_out.npz ./testSamples/sample_plot
+rule wisecondor_plot:
+  input:
+    npz=lambda wildcards: config["path"]["wcout"] + config["sampleID"][wildcards.sample] + ".npz",
+    npz_out=lambda wildcards: config["path"]["wcout"] + config["sampleID"][wildcards.sample] + "_out.npz"
+  output:
+    report=config["path"]["wcresult"] + "{sample}.report"
+  log: config["path"]["wcresult"] + "{sample}.report.log"
+  params:
+    plot_prefix=config["path"]["wcresult"] + "{sample}",
+    arg=""
+  run:
+    shell("python2.7 ~/repos/wisecondor/wisecondor.py report {input.npz} {input.npz_out} > {output.report} 2> {log}; "
+          "python2.7 ~/repos/wisecondor/wisecondor.py plot {input.npz_out} {params.plot_prefix} 2> {log}.plot")

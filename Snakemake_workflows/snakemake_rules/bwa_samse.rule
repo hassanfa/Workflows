@@ -1,0 +1,20 @@
+# vim: syntax=python tabstop=4 expandtab
+# coding: utf-8
+
+__author__ = "Hassan Foroughi Asl"
+
+# Following rule will generate alignment in SAM format 
+rule bwa_samse:
+  input:
+    fa=config["path"]["genomefa"] + config["references"]["genomefa"],
+    fq=lambda wildcards: config["path"]["fastq"] + config["sampleID"][wildcards.sample] + ".fastq.gz",
+    sai=lambda wildcards: config["path"]["saiout"] + config["sampleID"][wildcards.sample] + ".sai",
+    refidx=expand(config["path"]["genomefa"] + config["references"]["genomefa"] + ".{prefix}", prefix=["amb","ann","bwt","pac","sa"])
+  output:
+    bam=config["path"]["bamout"] + "{sample}.bam"
+  log: config["path"]["bamout"] + "{sample}.bam.log"
+  params:
+    arg=config["params"]["bwa_samse"]
+  run:
+    shell("bwa samse {params.arg} {input.fa} {input.sai} {input.fq} 2> {log} | samtools view -b - > {output.bam}")
+

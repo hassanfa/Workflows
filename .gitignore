@@ -1,0 +1,5 @@
+Snakemake_workflows/data/*/*test*
+Snakemake_workflows/snakemake_workflow/.snakemake/
+Snakemake_workflows/snakemake_workflow/.DS_Store
+Snakemake_workflows/*DS_Store*
+Snakemake_workflows/data/rasta

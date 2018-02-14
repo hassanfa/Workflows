@@ -1,0 +1,28 @@
+{
+  "path": {
+      "genomefa": "../data/ref/",
+      "fastq": "../data/fq_data/case/fastq/",
+      "saiout": "../data/output/case/sai/",
+      "bamout": "../data/output/case/bam/",
+      "wcout": "../data/output/case/wc/",
+      "wcresult": "../data/output/case/wcresult/",
+      "wcnpzref": "../data/output/control/wcref/"
+  },
+  "references": {
+      "genomefa": "GRCh38.primary_assembly.genome.fa",
+      "wcref"   : "reference.npz"
+  },
+  "sampleID": {
+      "test-2017-15913-05_CTTGTA_L001_R1_001.200kRead": "test-2017-15913-05_CTTGTA_L001_R1_001.200kRead",
+      "test-2017-15913-05_CTTGTA_L002_R1_001.200kRead": "test-2017-15913-05_CTTGTA_L002_R1_001.200kRead",
+      "test-2017-15918-05_AGTCAA_L001_R1_001.200kRead": "test-2017-15918-05_AGTCAA_L001_R1_001.200kRead",
+      "test-2017-15918-05_AGTCAA_L002_R1_001.200kRead": "test-2017-15918-05_AGTCAA_L002_R1_001.200kRead"
+  },
+  "params": {
+      "bwa_aln": "-n 0 -k 0",
+      "bwa_samse": "-n -1",
+      "picard_sort": "SO=coordinate VALIDATION_STRINGENCY=LENIENT CREATE_INDEX=true",
+      "wc_convert": "-binsize 50000"
+  }
+}
+

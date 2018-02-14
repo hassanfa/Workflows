@@ -1,0 +1,22 @@
+#!python
+# vim: syntax=python tabstop=4 expandtab
+# coding: utf-8
+
+configfile: "../snakemake_config/config_reference.json"
+
+rule_dir = "../snakemake_rules/"
+
+include:
+  rule_dir + "picard_sort.rule"
+include:
+  rule_dir + "bwa_samse.rule"
+include:
+  rule_dir + "bwa_aln.rule"
+include:
+  rule_dir + "wisecondor_ref.rule"
+
+rule all:
+  input:
+      config["path"]["wcnpzref"] + "reference.npz",
+      expand(config["path"]["wcout"] + "{sample}.npz", sample = config["sampleID"])
+
